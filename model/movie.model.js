@@ -7,7 +7,8 @@ const movieSchema = mongoose.Schema({
     rating: Number,
     date: String,
     description: String,
-    languages: Array
+    languages: Array,
+    bookings: Array
 }, {
     versionKey: false
 })

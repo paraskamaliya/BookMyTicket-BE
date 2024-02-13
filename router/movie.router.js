@@ -2,9 +2,15 @@ const express = require('express');
 const movieRouter = express.Router();
 const { MovieModel } = require('../model/movie.model');
 
-movieRouter.get("/", async (req, res) => {
+movieRouter.get("/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-        const data = await MovieModel.find();
+        let data;
+        if (id) {
+            data = await MovieModel.find({ _id: id })
+        } else {
+            data = await MovieModel.find()
+        }
         res.status(200).send(data);
     } catch (error) {
         res.status(400).send({ "msg": "Something went wrong" })
@@ -14,7 +20,7 @@ movieRouter.get("/", async (req, res) => {
 movieRouter.post('/add', async (req, res) => {
     const { title, poster, duration, category, rating, date, description, languages } = req.body;
     try {
-        const newMovie = new MovieModel({ title, poster, duration, category, rating, date, description, languages })
+        const newMovie = new MovieModel({ title, poster, duration, category, rating, date, description, languages, bookings: [] })
         await newMovie.save();
         res.status(200).send({ "msg": "New Movie data is added" })
     } catch (error) {
