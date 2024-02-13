@@ -2,15 +2,19 @@ const express = require('express');
 const movieRouter = express.Router();
 const { MovieModel } = require('../model/movie.model');
 
+movieRouter.get("/", async (req, res) => {
+    try {
+        let data = await MovieModel.find()
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(400).send({ "msg": "Something went wrong" })
+    }
+})
+
 movieRouter.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        let data;
-        if (id) {
-            data = await MovieModel.find({ _id: id })
-        } else {
-            data = await MovieModel.find()
-        }
+        let data = await MovieModel.find({ _id: id })
         res.status(200).send(data);
     } catch (error) {
         res.status(400).send({ "msg": "Something went wrong" })
