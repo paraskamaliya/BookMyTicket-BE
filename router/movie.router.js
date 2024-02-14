@@ -15,7 +15,7 @@ movieRouter.get("/", async (req, res) => {
 movieRouter.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        let data = await MovieModel.find({ _id: id })
+        let data = await MovieModel.findOne({ _id: id })
         res.status(200).send(data);
     } catch (error) {
         res.status(400).send({ "msg": "Something went wrong" })
