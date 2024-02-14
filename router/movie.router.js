@@ -1,6 +1,7 @@
 const express = require('express');
 const movieRouter = express.Router();
 const { MovieModel } = require('../model/movie.model');
+const { auth } = require('../middlewares/auth.middleware');
 
 movieRouter.get("/", async (req, res) => {
     try {
@@ -32,7 +33,7 @@ movieRouter.post('/add', async (req, res) => {
     }
 })
 
-movieRouter.patch("/update/:id", async (req, res) => {
+movieRouter.patch("/update/:id", auth, async (req, res) => {
     const { id } = req.params;
     try {
         await MovieModel.findByIdAndUpdate({ _id: id }, req.body);
