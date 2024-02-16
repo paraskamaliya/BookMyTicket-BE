@@ -19,7 +19,7 @@ userRouter.post("/register", async (req, res) => {
                 if (err) {
                     res.status(202).send({ "msg": "Something went wrong, Please try again", "err": err })
                 } else {
-                    let user = new UserModel({ username, email, password, gender, bookings: [] })
+                    let user = new UserModel({ username, email, password: hash, gender, bookings: [] })
                     await user.save();
                     res.status(200).send({ "msg": "User is Registered" })
                 }
