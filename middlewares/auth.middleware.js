@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const auth = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
     if (token) {
-        const tkn = await ListModel.find({ token });
+        const tkn = await ListModel.findOne({ token });
         if (!tkn) {
             jwt.verify(token, "users", (err, decoded) => {
                 if (err) {
